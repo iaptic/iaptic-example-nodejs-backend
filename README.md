@@ -2,7 +2,7 @@
 
 > Example of a simple backend for an app with user login and subscription management.
 
-Using NodeJS and express.
+Using [Iaptic](https://iaptic.com/), [NodeJS](https://nodejs.org/) and [express](https://expressjs.com/).
 
 ### Usage
 
