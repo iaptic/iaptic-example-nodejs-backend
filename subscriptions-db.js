@@ -1,6 +1,3 @@
-/**
- * Unsafe user session.
- */
 
 /**
  * @typedef {Object} Subscription
