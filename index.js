@@ -3,8 +3,10 @@
 const http = require('http');
 const app = require('./app');
 
+// Add a verbose mode flag
+const verboseMode = process.env.VERBOSE_MODE === 'true';
+
 const port = parseInt(process.env.PORT || '8000');
-// app.set('port', port);
 const server = http.createServer(app);
 server.on('error', onError);
 server.on('listening', onListening);
@@ -42,5 +44,23 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   console.log('Listening on ' + bind);
+  
+  // Add verbose logging
+  if (verboseMode) {
+    console.log('Verbose mode enabled');
+    console.log('Server configuration:');
+    console.log(`- Port: ${port}`);
+    console.log(`- Route prefix: ${process.env.ROUTE_PREFIX || '/demo'}`);
+    console.log(`- Iaptic password set: ${!!process.env.IAPTIC_PASSWORD}`);
+    console.log('Environment variables:');
+    Object.keys(process.env).forEach(key => {
+      if (key !== 'IAPTIC_PASSWORD') { // Don't log sensitive information
+        console.log(`- ${key}: ${process.env[key]}`);
+      }
+    });
+  }
 }
+
+// Export the verboseLogger for use in app.js
+module.exports = { server };
 

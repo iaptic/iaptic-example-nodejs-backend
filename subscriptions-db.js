@@ -50,4 +50,17 @@ function fetch(username, callback) {
     });
 }
 
-module.exports = {update, fetch}
+function remove(username, callback) {
+  db.run('DELETE FROM subscriptions WHERE username = ?', [username], function(err) {
+    if (err) {
+      console.error('Error attempting to delete subscription:', err);
+      callback(err);
+      return;
+    }
+    const wasDeleted = this.changes > 0;
+    console.log(`Subscription for user ${username} ${wasDeleted ? 'deleted successfully' : 'not found or already deleted'}.`);
+    callback(null, wasDeleted);
+  });
+}
+
+module.exports = {update, fetch, remove}
